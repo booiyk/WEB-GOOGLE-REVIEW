@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Review Card - Tingkatkan Ulasan Bisnis Anda</title>
+    <style>
+        /* === VARIABEL WARNA & TEMA === */
+        :root {
+            --bg-color: #0D0D0D;
+            --surface-color: #1A1A1A;
+            --surface-hover: #262626;
+            --text-primary: #F9F9F9;
+            --text-secondary: #B3B3B3;
+            --accent-green: #34A853; /* Warna hijau Google */
+            --accent-green-hover: #2b8b45;
+            --accent-gold: #D4AF37;
+            --border-color: #333333;
+        }
+
+        /* === RESET & BASE TYPOGRAPHY === */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 18px; 
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* === HEADER === */
+        header {
+            background-color: rgba(13, 13, 13, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .logo span {
+            color: var(--accent-green);
+        }
+        .btn-header {
+            background-color: var(--accent-green);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* === BUTTONS UMUM === */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--accent-green);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            min-height: 56px; 
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: var(--accent-green-hover);
+        }
+        .btn-wa {
+            background-color: #25D366; 
+            width: 100%;
+            font-size: 1.2rem;
+            gap: 10px;
+        }
+        .btn-wa:hover {
+            background-color: #1da851;
+        }
+
+        /* === HERO SECTION === */
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+        .hero h1 {
+            font-size: 2.2rem;
+            line-height: 1.3;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        /* Update for Video */
+        .hero-video-wrapper {
+            background-color: var(--surface-color);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Soft shadow */
+        }
+        .hero-video-wrapper video {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: inherit;
+        }
+
+        /* === HOW IT WORKS === */
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            padding-top: 40px;
+        }
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .step-card {
+            background-color: var(--surface-color);
+            padding: 30px 20px;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        .step-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        .step-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--accent-gold);
+        }
+
+        /* === DEMO SMART REVIEW GATE === */
+        .demo-section {
+            margin: 60px 0;
+        }
+        .demo-card {
+            background-color: var(--surface-color);
+            padding: 40px 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .demo-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+        .demo-card p.demo-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+        }
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 3.5rem;
+            cursor: pointer;
+            margin-bottom: 25px;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .star-rating span {
+            color: var(--border-color);
+            transition: transform 0.1s ease, color 0.2s ease;
+        }
+        .star-rating span:active {
+            transform: scale(0.85);
+        }
+        .demo-result {
+            background-color: var(--bg-color);
+            padding: 25px 20px;
+            border-radius: 12px;
+            border: 1px dashed var(--border-color);
+            margin-top: 20px;
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .demo-result p {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        .demo-result .btn {
+            font-size: 1rem;
+            padding: 14px 20px;
+            width: 100%;
+        }
+        .demo-note {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 25px;
+            text-align: left;
+            font-style: italic;
+        }
+
+        /* === CALCULATOR SECTION === */
+        .calc-section {
+            background-color: var(--surface-color);
+            padding: 40px 20px;
+            border-radius: 16px;
+            margin: 60px 0;
+            border: 1px solid var(--border-color);
+        }
+        .calc-input-group {
+            margin-bottom: 30px;
+        }
+        .calc-input-group label {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        .calc-input-group input {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.2rem;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            text-align: center;
+        }
+        .calc-input-group input:focus {
+            outline: none;
+            border-color: var(--accent-green);
+        }
+        .calc-results {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .result-box {
+            background-color: var(--bg-color);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .result-box.highlight {
+            border-color: var(--accent-green);
+            background-color: rgba(52, 168, 83, 0.05);
+            position: relative;
+        }
+        .result-box span {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .result-box strong {
+            font-size: 2rem;
+            color: var(--text-primary);
+        }
+        .result-box.highlight strong {
+            color: var(--accent-green);
+        }
+        .badge-10x {
+            background-color: var(--accent-gold);
+            color: black;
+            font-size: 0.85rem;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-top: 10px;
+        }
+        .calc-note {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* === ORDER SECTION (PRODUCTS) === */
+        .products-area {
+            margin: 60px 0;
+        }
+        .order-section {
+            background-color: var(--surface-color);
+            border-radius: 16px;
+            border: 2px solid var(--border-color);
+            overflow: hidden;
+            margin-bottom: 30px; /* Jarak antar produk */
+        }
+        .order-image-area {
+            position: relative;
+            background-color: #222;
+        }
+        .order-image-area img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+        .price-tag {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(0,0,0,0.85);
+            padding: 15px 20px;
+            border-top-right-radius: 16px;
+        }
+        .price-tag .normal-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+        .price-tag .promo-info {
+            font-size: 0.9rem;
+            color: var(--accent-gold);
+        }
+        .order-controls-area {
+            padding: 30px;
+        }
+        .product-title {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: var(--accent-gold);
+        }
+        .product-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+        .qty-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-color);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 5px;
+            margin-bottom: 25px;
+        }
+        .qty-btn {
+            background-color: var(--surface-hover);
+            color: var(--text-primary);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .qty-btn:active {
+            background-color: var(--border-color);
+        }
+        .qty-display {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+        .total-price-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 20px;
+        }
+        .total-price-val {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent-green);
+        }
+
+        /* === FAQ SECTION === */
+        .faq-item {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--surface-color);
+        }
+        .faq-question:hover {
+            background-color: var(--surface-hover);
+        }
+        .faq-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            background-color: var(--bg-color);
+        }
+        .faq-item.active .faq-answer {
+            padding: 20px;
+            max-height: 200px;
+            border-top: 1px solid var(--border-color);
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        /* === FOOTER === */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+        
+        /* === RESPONSIVE (DESKTOP/TABLET) === */
+        @media (min-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .steps { flex-direction: row; }
+            .step-card { flex: 1; }
+            .calc-results { flex-direction: row; }
+            .result-box { flex: 1; }
+            
+            .order-section {
+                display: flex;
+            }
+            .order-image-area {
+                flex: 1;
+            }
+            .order-image-area img {
+                height: 100%;
+            }
+            .order-controls-area {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. HEADER -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">Review<span>Card</span></div>
+            <a href="#order" class="btn-header">Pesan Sekarang</a>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- 2. HERO SECTION DENGAN VIDEO -->
+        <section class="hero">
+            <h1>Dapatkan Lebih Banyak Ulasan Google Hanya Dengan 1 Tempelan</h1>
+            <p>Hemat waktu pelanggan Anda. Tingkatkan rating & jumlah ulasan tanpa perlu install aplikasi apapun. Sangat mudah dan praktis!</p>
+            
+            <div class="hero-video-wrapper">
+                <!-- TODO: Ganti src video dengan video produk Anda -->
+                <video id="hero-video" src="hero-video.mp4" autoplay muted loop playsinline></video>
+            </div>
+            
+            <a href="#order" class="btn">Pesan Sekarang</a>
+        </section>
+
+        <!-- 3. CARA KERJA -->
+        <section>
+            <h2 class="section-title">Cara Kerja Sangat Mudah</h2>
+            <div class="steps">
+                <div class="step-card">
+                    <div class="step-icon">📱</div>
+                    <h3>1. Tempelkan</h3>
+                    <p>Dekatkan/tempelkan kartu ke bagian belakang HP pelanggan Anda.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon">🌐</div>
+                    <h3>2. Otomatis Terbuka</h3>
+                    <p>Halaman ulasan Google toko Anda otomatis terbuka di layar HP.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon">⭐</div>
+                    <h3>3. Beri Bintang</h3>
+                    <p>Pelanggan tinggal menekan bintang 5 dan membagikan ulasannya.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3.5 SMART REVIEW GATE DEMO -->
+        <section class="demo-section">
+            <h2 class="section-title">Lihat Cara Kerja Filter Ulasan Pintar</h2>
+            <div class="demo-card">
+                <h3>Bagaimana Jika Pelanggan Kasih Rating Rendah?</h3>
+                <p class="demo-subtitle">Google Review Card kami otomatis menyaring feedback negatif sebelum masuk ke publik. Coba klik bintang di bawah ini:</p>
+                
+                <!-- Bintang Interaktif -->
+                <div class="star-rating" id="demo-stars">
+                    <span data-value="1">★</span>
+                    <span data-value="2">★</span>
+                    <span data-value="3">★</span>
+                    <span data-value="4">★</span>
+                    <span data-value="5">★</span>
+                </div>
+
+                <!-- Hasil Mockup -->
+                <div id="demo-result" class="demo-result">
+                    <p id="demo-message"></p>
+                    <a id="demo-link" href="#" target="_blank" class="btn"></a>
+                </div>
+                
+                <p class="demo-note">*Catatan: Ini adalah contoh ilustrasi — link tujuan yang asli akan disesuaikan dengan nomor WhatsApp & profil Google Bisnis Anda setelah pemesanan dilakukan.</p>
+            </div>
+        </section>
+
+        <!-- 4. KALKULATOR -->
+        <section class="calc-section">
+            <h2 style="text-align: center; margin-bottom: 20px;">Estimasi Kenaikan Ulasan</h2>
+            
+            <div class="calc-input-group">
+                <label for="calc-input">Berapa rata-rata jumlah pelanggan Anda per hari?</label>
+                <input type="number" id="calc-input" placeholder="Ketik angka di sini (Contoh: 30)" min="1">
+            </div>
+
+            <div class="calc-results">
+                <div class="result-box">
+                    <span>Review per bulan saat ini:</span>
+                    <strong id="calc-current">± 0</strong>
+                    <span style="font-size:0.75rem; margin-top:5px;">(Asumsi 2% pelanggan)</span>
+                </div>
+                <div class="result-box highlight">
+                    <span>Review per bulan dengan kartu:</span>
+                    <strong id="calc-card">± 0</strong>
+                    <span style="font-size:0.75rem; margin-top:5px; color:inherit;">(Asumsi 20% pelanggan)</span>
+                    <div class="badge-10x">Naik hingga 10x lipat!</div>
+                </div>
+            </div>
+            
+            <p class="calc-note">*Estimasi ilustratif, hasil aktual dapat bervariasi tergantung kenyamanan pelanggan & jenis bisnis.</p>
+        </section>
+
+        <!-- 5. HARGA & PEMESANAN (2 PRODUK) -->
+        <section id="order" class="products-area">
+            <h2 class="section-title">Pilih Varian Kartu Anda</h2>
+
+            <!-- PRODUK 1: VERSI ORIGINAL -->
+            <div class="order-section">
+                <div class="order-image-area">
+                    <!-- TODO: Ganti gambar untuk Versi Original -->
+                    <img src="https://via.placeholder.com/400x400/222222/FFFFFF?text=FOTO+KARTU+ORIGINAL" alt="Review Card Original">
+                    <div class="price-tag" id="price-label-orig">
+                        <div class="normal-price">Rp90.000 / pcs</div>
+                        <div class="promo-info">Beli 5+ jadi Rp80.000 / pcs</div>
+                    </div>
+                </div>
+                
+                <div class="order-controls-area">
+                    <h2 class="product-title">Google Review Card — Versi Original</h2>
+                    <p class="product-subtitle">Desain elegan dan kokoh. Pilihan terbaik untuk memberikan kesan premium di meja kasir Anda.</p>
+                    
+                    <label style="display:block; margin-bottom:10px; color:var(--text-secondary);">Jumlah Beli:</label>
+                    <div class="qty-wrapper">
+                        <button class="qty-btn" id="btn-min-orig">−</button>
+                        <div class="qty-display" id="qty-display-orig">1</div>
+                        <button class="qty-btn" id="btn-plus-orig">+</button>
+                    </div>
+                    
+                    <div class="total-price-area">
+                        <span>Total Harga:</span>
+                        <span class="total-price-val" id="total-price-orig">Rp90.000</span>
+                    </div>
+                    
+                    <a href="#" id="wa-btn-orig" class="btn btn-wa" target="_blank">
+                        <!-- Icon WhatsApp SVG -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.487-1.761-1.66-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+                        </svg>
+                        Pesan via WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- PRODUK 2: VERSI PVC -->
+            <div class="order-section">
+                <div class="order-image-area">
+                    <!-- TODO: Ganti gambar untuk Versi PVC -->
+                    <img id="product-image-pvc" src="https://via.placeholder.com/400x400/222222/FFFFFF?text=FOTO+KARTU+PVC" alt="Review Card PVC">
+                    <div class="price-tag">
+                        <div class="normal-price">Rp50.000 / pcs</div>
+                    </div>
+                </div>
+                
+                <div class="order-controls-area">
+                    <h2 class="product-title">Google Review Card — Versi PVC</h2>
+                    <p class="product-subtitle">Versi lebih ekonomis dengan bahan PVC, fungsi tap-to-review sama persis seperti versi original.</p>
+                    
+                    <label style="display:block; margin-bottom:10px; color:var(--text-secondary);">Jumlah Beli:</label>
+                    <div class="qty-wrapper">
+                        <button class="qty-btn" id="btn-min-pvc">−</button>
+                        <div class="qty-display" id="qty-display-pvc">1</div>
+                        <button class="qty-btn" id="btn-plus-pvc">+</button>
+                    </div>
+                    
+                    <div class="total-price-area">
+                        <span>Total Harga:</span>
+                        <span class="total-price-val" id="total-price-pvc">Rp50.000</span>
+                    </div>
+                    
+                    <a href="#" id="wa-btn-pvc" class="btn btn-wa" target="_blank">
+                        <!-- Icon WhatsApp SVG -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.487-1.761-1.66-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+                        </svg>
+                        Pesan via WhatsApp
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. FAQ SECTION -->
+        <section>
+            <h2 class="section-title">Pertanyaan yang Sering Diajukan (FAQ)</h2>
+            <div class="faq-container">
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Apakah kartu ini bisa dipakai di semua jenis HP?
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Ya, kartu NFC ini kompatibel dengan hampir semua smartphone modern (Android maupun iPhone) yang sudah mendukung fitur NFC — dan hampir semua HP keluaran 5 tahun terakhir sudah mendukungnya.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Apakah pelanggan perlu install aplikasi tertentu?
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Tidak. Pelanggan cukup tempelkan HP ke kartu, halaman ulasan Google akan otomatis terbuka di browser bawaan mereka tanpa perlu instalasi aplikasi tambahan.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Apakah kartu diarahkan ke Google Bisnis toko saya?
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Bisa. Setiap kartu akan kami setting (program) secara khusus agar mengarah langsung ke halaman ulasan Google Bisnis toko Anda sebelum paket dikirim.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Berapa lama proses pengiriman?
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Estimasi pengiriman memakan waktu 2-4 hari kerja setelah pesanan dikonfirmasi dan disetting, tergantung jarak dan lokasi tujuan pengiriman.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Apakah ada garansi jika kartu rusak/tidak berfungsi?
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Ya, kami memberikan garansi penggantian penuh jika kartu terbukti tidak berfungsi saat diterima karena adanya cacat produksi.
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 7. FOOTER -->
+    <footer>
+        <p>&copy; 2026 Google Review Card.</p>
+        <p>Ada pertanyaan lain? Hubungi WhatsApp kami di <strong>088212725000</strong></p>
+    </footer>
+
+    <!-- === JAVASCRIPT === -->
+    <script>
+        // --- 1. Logika Smart Review Gate Demo ---
+        const demoStars = document.querySelectorAll('#demo-stars span');
+        const demoResult = document.getElementById('demo-result');
+        const demoMessage = document.getElementById('demo-message');
+        const demoLink = document.getElementById('demo-link');
+
+        function highlightStars(indexToHighlight) {
+            demoStars.forEach((star, index) => {
+                if (index <= indexToHighlight) {
+                    star.style.color = 'var(--accent-gold)';
+                } else {
+                    star.style.color = 'var(--border-color)';
+                }
+            });
+        }
+
+        demoStars.forEach((star, index) => {
+            star.addEventListener('mouseover', () => {
+                highlightStars(index);
+            });
+            
+            star.addEventListener('mouseleave', () => {
+                const activeStar = document.querySelector('#demo-stars span.selected');
+                if (activeStar) {
+                    highlightStars(parseInt(activeStar.dataset.value) - 1);
+                } else {
+                    highlightStars(-1);
+                }
+            });
+
+            star.addEventListener('click', () => {
+                const rating = index + 1;
+                
+                demoStars.forEach(s => s.classList.remove('selected'));
+                star.classList.add('selected');
+                highlightStars(index);
+
+                demoResult.style.display = 'block';
+
+                if (rating <= 3) {
+                    demoMessage.textContent = "Terima kasih atas feedback-nya! Tim kami akan segera menghubungi Anda untuk perbaikan.";
+                    demoLink.href = "https://wa.me/6280000000000?text=Halo%2C%20kami%20menerima%20feedback%20Anda%2C%20mohon%20maaf%20atas%20ketidaknyamanannya";
+                    demoLink.className = "btn btn-wa";
+                    demoLink.innerHTML = `
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="margin-right:8px; display:inline-block;">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.487-1.761-1.66-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+                        </svg>
+                        Lanjut ke WhatsApp (Simulasi)
+                    `;
+                } else {
+                    demoMessage.textContent = "Terima kasih! Mohon bantu kami dengan ulasan di Google ya 🙏";
+                    demoLink.href = "https://search.google.com/local/writereview?placeid=ChIJplaceholderdummy";
+                    demoLink.className = "btn";
+                    demoLink.innerHTML = "Lanjut ke Google Maps (Simulasi)";
+                }
+            });
+        });
+
+        // --- 2. Logika Kalkulator ---
+        const calcInput = document.getElementById('calc-input');
+        const calcCurrent = document.getElementById('calc-current');
+        const calcCard = document.getElementById('calc-card');
+
+        calcInput.addEventListener('input', function(e) {
+            let pelangganHarian = parseInt(e.target.value);
+            if (isNaN(pelangganHarian) || pelangganHarian <= 0) {
+                calcCurrent.textContent = '± 0';
+                calcCard.textContent = '± 0';
+                return;
+            }
+            const totalPelangganBulan = pelangganHarian * 30;
+            const reviewCurrent = Math.round(totalPelangganBulan * 0.02);
+            const reviewCard = Math.round(totalPelangganBulan * 0.20);
+            calcCurrent.textContent = '± ' + reviewCurrent;
+            calcCard.textContent = '± ' + reviewCard;
+        });
+
+        // Utils Umum
+        function formatRupiah(angka) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+        }
+        const targetNumber = "6288212725000";
+
+        // --- 3A. Logika Pemesanan (PRODUK ORIGINAL) ---
+        let qtyOrig = 1;
+        const btnMinOrig = document.getElementById('btn-min-orig');
+        const btnPlusOrig = document.getElementById('btn-plus-orig');
+        const qtyDisplayOrig = document.getElementById('qty-display-orig');
+        const totalPriceOrig = document.getElementById('total-price-orig');
+        const waBtnOrig = document.getElementById('wa-btn-orig');
+        const priceLabelOrig = document.getElementById('price-label-orig');
+
+        function updateOrigDisplay() {
+            qtyDisplayOrig.textContent = qtyOrig;
+            
+            let pricePerPcs = (qtyOrig >= 5) ? 80000 : 90000;
+            let total = qtyOrig * pricePerPcs;
+            
+            totalPriceOrig.textContent = formatRupiah(total);
+
+            if (qtyOrig >= 5) {
+                priceLabelOrig.innerHTML = `
+                    <div class="promo-info" style="color:var(--text-secondary); text-decoration:line-through;">Rp90.000</div>
+                    <div class="normal-price" style="color:var(--accent-green);">Rp80.000 / pcs</div>
+                    <div class="promo-info" style="color:white; background:var(--accent-green); display:inline-block; padding:2px 8px; border-radius:4px; margin-top:5px;">Harga Promo Aktif!</div>
+                `;
+            } else {
+                priceLabelOrig.innerHTML = `
+                    <div class="normal-price">Rp90.000 / pcs</div>
+                    <div class="promo-info">Beli 5+ jadi Rp80.000 / pcs</div>
+                `;
+            }
+
+            const msgOrig = `Halo, saya mau order NFC Review Card sebanyak ${qtyOrig} pcs`;
+            waBtnOrig.href = `https://wa.me/${targetNumber}?text=${encodeURIComponent(msgOrig)}`;
+        }
+
+        btnMinOrig.addEventListener('click', () => {
+            if (qtyOrig > 1) { qtyOrig--; updateOrigDisplay(); }
+        });
+        btnPlusOrig.addEventListener('click', () => {
+            qtyOrig++; updateOrigDisplay();
+        });
+        updateOrigDisplay(); // Init
+
+        // --- 3B. Logika Pemesanan (PRODUK PVC) ---
+        let qtyPvc = 1;
+        const btnMinPvc = document.getElementById('btn-min-pvc');
+        const btnPlusPvc = document.getElementById('btn-plus-pvc');
+        const qtyDisplayPvc = document.getElementById('qty-display-pvc');
+        const totalPricePvc = document.getElementById('total-price-pvc');
+        const waBtnPvc = document.getElementById('wa-btn-pvc');
+
+        function updatePvcDisplay() {
+            qtyDisplayPvc.textContent = qtyPvc;
+            
+            // Harga Flat
+            let total = qtyPvc * 50000;
+            totalPricePvc.textContent = formatRupiah(total);
+
+            const msgPvc = `Halo, saya mau order NFC Review Card PVC sebanyak ${qtyPvc} pcs`;
+            waBtnPvc.href = `https://wa.me/${targetNumber}?text=${encodeURIComponent(msgPvc)}`;
+        }
+
+        btnMinPvc.addEventListener('click', () => {
+            if (qtyPvc > 1) { qtyPvc--; updatePvcDisplay(); }
+        });
+        btnPlusPvc.addEventListener('click', () => {
+            qtyPvc++; updatePvcDisplay();
+        });
+        updatePvcDisplay(); // Init
+
+        // --- 4. Logika FAQ Accordion ---
+        const faqs = document.querySelectorAll('.faq-item');
+        faqs.forEach(faq => {
+            const question = faq.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                faqs.forEach(item => {
+                    if (item !== faq) { item.classList.remove('active'); }
+                });
+                faq.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
